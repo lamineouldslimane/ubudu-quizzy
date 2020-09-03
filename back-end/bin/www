@@ -12,7 +12,10 @@ app.set('port', port);
 var server = http.createServer(app);
 
 // Try to connect to the database before starting the server.
-database.on('error', console.error.bind(console, 'connection error: '));
+database.on('error', (err) => {
+  console.log(error)
+}
+);
 database.once('open', function () {
   console.log('Connection to database succeeded !')
   startServer()

@@ -74,7 +74,7 @@ function Signup() {
       <img
         alt='logo'
         className="logo-img"
-        width='138'
+        width='142'
         height='128'
         src={logoBig}
       />

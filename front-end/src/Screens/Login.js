@@ -14,7 +14,7 @@ function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const { setAuthTokens } = useAuth();
+  const { setAuthTokens, authTokens } = useAuth();
   const referer = '/'
 
   const postLogin = async () => {
@@ -32,12 +32,13 @@ function Login(props) {
       setLoggedIn(true)
     }
     catch (error) {
-      console.log({ error })
-      setError(error.response);
+      const errorMessage = error.response ?
+        error.response.data : "Un problème est survenu, veuillez réessayez plus tard"
+      setError(errorMessage);
     }
   }
 
-  if (isLoggedIn) {
+  if (authTokens) {
     return <Redirect to={referer} />;
   }
 
@@ -48,7 +49,7 @@ function Login(props) {
       <img
         alt='logo'
         className="logo-img"
-        width='138'
+        width='142'
         height='128'
         src={logoBig}
       />
@@ -72,7 +73,7 @@ function Login(props) {
         <Button disabled={disabled} onClick={postLogin}>Se connecter</Button>
       </Form>
       <Link className="link" to="/signup">Vous n'avez pas de compte ?</Link>
-      {error && <p className="error-text">{error.data || 'Un problème est survenu, veuillez réessayez plus tard'}</p>}
+      {error && <p className="error-text">{error}</p>}
     </Card>
   );
 }
