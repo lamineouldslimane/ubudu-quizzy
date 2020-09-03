@@ -129,19 +129,21 @@ var opts = {
 passport.use(
   'jwt',
   new JWTstrategy(opts, function (jwt_payload, done) {
+    console.log({ jwt_payload })
+
     try {
       Users.findOne({
-        _id: jwt_payload.id,
+        _id: jwt_payload._id,
       },
         function (err, user) {
-          if (!err) {
+          if (user) {
             console.log('user found in db in passport');
             console.log(user)
 
             // Pass user to express
             done(null, user);
           }
-          else {
+          else if (err) {
             console.log(err);
 
             // Return an error

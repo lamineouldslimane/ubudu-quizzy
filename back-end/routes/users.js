@@ -54,7 +54,7 @@ router.post('/login', function (req, res, next) {
 
     // If everything is fine
     else {
-      req.logIn(users, () => {
+      req.logIn(users, { session: false }, () => {
         Users.findOne({ username: req.body.username }, function (err, user) {
 
           // Internal server Error
@@ -63,8 +63,8 @@ router.post('/login', function (req, res, next) {
           }
 
           // Sign user
-          var token = jwt.sign({ id: user.id }, jwtSecret.secret, {
-            expiresIn: 60 * 60,
+          var token = jwt.sign({ _id: user._id }, jwtSecret.secret, {
+            expiresIn: 60 * 60 * 60,
           });
 
           // Return user info and token to the client

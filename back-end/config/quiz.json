@@ -17,28 +17,31 @@
       "correctAnswer": 3
     },
     {
-      "question": "En quelle année a été créé le langage de programmation C++",
-      "answers": ["1975", "1983", "Douze", "1978"],
-      "correctAnswer": 1
+      "question": "Quelle est la capitale de la chine ?",
+      "answers": ["Pekin", "Le japon", "Hong-kong", "Pekin express"],
+      "correctAnswer": 2
     },
     {
-      "question": "En quelle année a été créé le langage de programmation C++",
-      "answers": ["1975", "1983", "Douze", "1978"],
-      "correctAnswer": 1
+      "question": "Quelle est la date de naissance de passe-partout (fort-boyard) ?",
+      "answers": ["1968", "1972", "2025 (Il est fort)", "1850"],
+      "correctAnswer": 0
     },
     {
-      "question": "En quelle année a été créé le langage de programmation C++",
-      "answers": ["1975", "1983", "Douze", "1978"],
-      "correctAnswer": 1
+      "question": "Quel mot signifie la peur des longs mots ?",
+      "answers": ["Hippopotomonstrosesquipedialophobie",
+        "motalungaphobia", "Cette phobie n'existe pas",
+        ". (pour ne pas effrayer les patients)"
+      ],
+      "correctAnswer": 0
     },
     {
-      "question": "En quelle année a été créé le langage de programmation C++",
-      "answers": ["1975", "1983", "Douze", "1978"],
-      "correctAnswer": 1
+      "question": "Combien a vecu la femme la plus agée du monde ?",
+      "answers": ["Douze mille ans", "666 ans", "117 ans", "117 ans et demi"],
+      "correctAnswer": 2
     },
     {
-      "question": "En quelle année a été créé le langage de programmation C++",
-      "answers": ["1975", "1983", "Douze", "1978"],
+      "question": "D'où venait-elle ?",
+      "answers": ["Pékin", "Le japon", "Hong-kong", "Pekin express"],
       "correctAnswer": 1
     }
   ]

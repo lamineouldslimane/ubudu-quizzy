@@ -26,6 +26,8 @@ router.post('/verify', function (req, res, next) {
       var quiz_id = req.body.quiz_id
       var answers = req.body.answers
 
+      console.log(req.body)
+
       if (!quiz_id || !answers || answers.length === 0) {
         res.status(400).send("Les données envoyées sont invalides.")
       }
@@ -45,7 +47,14 @@ router.post('/verify', function (req, res, next) {
 
               // Calculate the score
               answers.map(function (answer, i) {
-                answer === questions[i].correctAnswer ? score += 3 : score -= 1
+                console.log(answer + ' vs ' + questions[i].correctAnswer)
+
+                if (answer !== questions[i].correctAnswer) {
+                  score = score - 1
+                  return
+                }
+
+                score = score + 3
               })
 
               // Save participation into database
@@ -104,14 +113,14 @@ router.get('/', function (req, res, next) {
 
               if (quiz) {
                 var headers = { 'Content-Type': 'application/json' }
-                res.status(201).set(headers).send(JSON.stringify(quiz))
+                res.status(200).set(headers).send(JSON.stringify(quiz))
               }
             })
           }
 
           else {
             var headers = { 'Content-Type': 'application/json' }
-            res.status(201).set(headers).send(JSON.stringify(quiz))
+            res.status(200).set(headers).send(JSON.stringify(quiz))
           }
         })
       }
