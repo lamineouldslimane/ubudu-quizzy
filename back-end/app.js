@@ -29,7 +29,7 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-// app.use('/quizzes', quizzesRouter);
+app.use('/quizzes', quizzesRouter);
 
 // The error handler
 /* app.use(function (err, req, res, next) {

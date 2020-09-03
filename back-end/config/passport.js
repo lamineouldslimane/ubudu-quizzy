@@ -9,6 +9,12 @@ var Users = require('../model/users')
 // Jwt secret import
 var jwtSecret = require('./jwt');
 
+// Bcrypt for hash
+var bcrypt = require('bcrypt');
+
+// Bcrypt configuration
+var salt_rounds = 14;
+
 // Register auth strategy
 passport.use(
   'register',
@@ -20,10 +26,6 @@ passport.use(
       session: false,
     },
     function (req, username, password, done) {
-      var firstname = req.body.firstname
-
-      console.log({ firstname })
-
       try {
         Users.findOne({
           username
@@ -38,10 +40,37 @@ passport.use(
                 message: "Le nom d'utilisateur est déjà pris.",
               });
             }
-          });
 
-        // Success
-        return done(null, false)
+            // Hashing the password before storing it
+            bcrypt.hash(password, salt_rounds)
+              .then(
+                function (hashedPassword) {
+                  Users.create({
+                    firstname: req.body.firstname,
+                    lastname: req.body.lastname,
+                    email: req.body.email,
+                    username,
+                    password: hashedPassword,
+                  },
+                    function (err, user) {
+                      if (err) {
+                        console.log(err)
+
+                        // Internal server error
+                        return done(null, false, {
+                          message: "Une erreur est survenue, réessayez plus tard."
+                        })
+                      }
+
+                      // Log user
+                      console.log('Created : ');
+                      console.log(user)
+
+                      // Success
+                      return done(null, user)
+                    });
+                });
+          });
       }
       catch (err) {
         return done(err);

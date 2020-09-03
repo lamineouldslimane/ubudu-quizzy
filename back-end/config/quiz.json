@@ -1,0 +1,45 @@
+{
+  "questions": [{
+      "question": "En quelle année a été créé le langage de programmation C++ ?",
+      "answers": ["1975", "1983", "Douze", "1978"],
+      "correctAnswer": 1
+    },
+    {
+      "question": "Que signifie HTTP ?",
+      "answers": ["Hyper Transfer Through Phones", "Hyper Transmission Tracking Protocol",
+        "Hypertext transfer protocol", "HTTP n'est pas un sigle."
+      ],
+      "correctAnswer": 1
+    },
+    {
+      "question": "MongoDB est une base de données de type...",
+      "answers": ["Clé-valeur", "Colonnes", "Données", "Documents"],
+      "correctAnswer": 1
+    },
+    {
+      "question": "En quelle année a été créé le langage de programmation C++",
+      "answers": ["1975", "1983", "Douze", "1978"],
+      "correctAnswer": 1
+    },
+    {
+      "question": "En quelle année a été créé le langage de programmation C++",
+      "answers": ["1975", "1983", "Douze", "1978"],
+      "correctAnswer": 1
+    },
+    {
+      "question": "En quelle année a été créé le langage de programmation C++",
+      "answers": ["1975", "1983", "Douze", "1978"],
+      "correctAnswer": 1
+    },
+    {
+      "question": "En quelle année a été créé le langage de programmation C++",
+      "answers": ["1975", "1983", "Douze", "1978"],
+      "correctAnswer": 1
+    },
+    {
+      "question": "En quelle année a été créé le langage de programmation C++",
+      "answers": ["1975", "1983", "Douze", "1978"],
+      "correctAnswer": 1
+    }
+  ]
+}

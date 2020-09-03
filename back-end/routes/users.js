@@ -2,16 +2,12 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport')
 var Users = require('../model/users')
-
-// Bcrypt for hash
-var bcrypt = require('bcrypt');
-
-// Bcrypt configuration
-var salt_rounds = 14;
+var jwt = require('jsonwebtoken')
+var jwtSecret = require('../config/jwt')
 
 /* Register user. */
-router.post('/', function (req, res, next) {
-  passport.authenticate('register', { session: false }, function (err, user, info) {
+router.post('/register', function (req, res, next) {
+  passport.authenticate('register', function (err, user, info) {
     // If there's an error
     if (err) {
       console.log(err);
@@ -19,47 +15,69 @@ router.post('/', function (req, res, next) {
 
     // If the error message isn't undefined
     if (info) {
-      console.log(info.message);
+      console.log({ error: info.message });
       res.status(401).send(info.message);
     }
-
     else {
       req.logIn(user, function (error) {
+        console.log('Registered !')
 
-        if (error) {
-          console.log(error)
-          res.status(500).send()
-        }
+        var headers = { 'Content-Type': 'application/json' }
 
-        // Hashing the password before storing it
-        bcrypt.hash(user.password, salt_rounds)
-          .then(
-            function (hashedPassword) {
-              Users.create({
-                ...req.body,
-                password: hashedPassword,
-              },
-                function (err, user) {
-                  if (err) {
-                    console.log(err)
-
-                    // Internal server error
-                    res.status(500).send()
-                  }
-
-                  // Log user
-                  console.log('Created : ');
-                  console.log(user)
-
-                  // Success
-                  res.status(201)
-                    .send(user)
-                });
-            });
+        res.set(headers).status(201).send(JSON.stringify(user))
       })
     }
   })(req, res, next);
+});
 
+/* Sign in user. */
+router.post('/login', function (req, res, next) {
+  passport.authenticate('login', (err, users, info) => {
+
+    // If there's an error
+    if (err) {
+      console.error(`error ${err}`);
+    }
+
+    // If an error message exists
+    if (info !== undefined) {
+      console.error(info.message);
+
+      // Handle status codes depending on message
+      if (info.message === "Nom d'utilisateur incorrect") {
+        res.status(401).send(info.message);
+      }
+      else {
+        res.status(403).send(info.message);
+      }
+    }
+
+    // If everything is fine
+    else {
+      req.logIn(users, () => {
+        Users.findOne({ username: req.body.username }, function (err, user) {
+
+          // Internal server Error
+          if (err) {
+            res.status(500).send()
+          }
+
+          // Sign user
+          var token = jwt.sign({ id: user.id }, jwtSecret.secret, {
+            expiresIn: 60 * 60,
+          });
+
+          // Return user info and token to the client
+          var headers = { 'Content-Type': 'application/json' }
+          res.set(headers).status(200).send({
+            auth: true,
+            token,
+            user
+          });
+        });
+      });
+    }
+  })(req, res, next);
 });
 
 module.exports = router;
